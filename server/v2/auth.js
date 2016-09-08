@@ -77,7 +77,7 @@ function logUserInteraction(externaluserid,itype,idescription,ios) {
     var token = uuid.v4(),  
     deferred = Q.defer();
     db.query('INSERT INTO latrobeasdetect.asdetect_interaction__c (asdetect_contact__r__loyaltyid__c, type__c,description__c,os__c,rest_endpoint_version__c) VALUES ($1, $2, $3, $4,$5)',
-                    [externaluserid, itype, idescription,ios,'1.0'], true)
+                    [externaluserid, itype, idescription,ios,version.endpoint], true)
     .then(function() {
             deferred.resolve(token);
         })
@@ -319,8 +319,8 @@ function createUser(user, password) {
         //externalUserId = (+new Date()).toString(36); // TODO: more robust UID logic
         externalUserId=uuid.v4();
 
-    db.query('INSERT INTO latrobeasdetect.asdetect_contact__c (email__c, password__c, firstname__c, lastname__c, country__c, loyaltyid__c,rest_endpoint_version__c) VALUES ($1, $2, $3, $4, $5, $6,$7) RETURNING id, firstname__c, lastname__c, email__c, loyaltyid__c as externalUserId',
-        [user.email__c, password, user.firstname__c, user.lastname__c, user.country__c, externalUserId,'1.0'], true)
+    db.query('INSERT INTO latrobeasdetect.asdetect_contact__c (email__c, password__c, firstname__c, lastname__c, country__c, loyaltyid__c) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, firstname__c, lastname__c, email__c, loyaltyid__c as externalUserId',
+        [lower(user.email__c), password, user.firstname__c, user.lastname__c, user.country__c, externalUserId], true)
         .then(function (insertedUser) {
             deferred.resolve(insertedUser);
         })
