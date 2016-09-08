@@ -6,7 +6,8 @@ var bcrypt = require('bcrypt'),
     validator = require('validator'),
     winston = require('winston'),
     UAParser = require('ua-parser-js'),
-    invalidCredentials = 'Invalid email or password';
+    invalidCredentials = 'Invalid email or password',
+    version = require('./version');
 
 /**
  * Encrypt password with per-user salt
@@ -159,6 +160,11 @@ function login(req, res, next) {
                 
                 //If password matches, log user in and create interaction record
                 if (match) {  
+
+                    //Update REST Endpoint Version of user - needed for segmented system logic such as email communication
+                    console.log('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [endpoint, user.email__c]);
+                    db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [endpoint, user.email__c]);
+
                      logUserInteraction(user.externaluserid,'Logged In','Node.js auth',os)    
                      .then             
                      cleanupAccessTokens(user)

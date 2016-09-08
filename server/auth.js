@@ -159,12 +159,6 @@ function login(req, res, next) {
                 
                 //If password matches, log user in and create interaction record
                 if (match) {  
-                    //updateRESTEndpointVersion(user)
-                    //.then
-                    
-                    //Code has been changed
-                    //console.log("attempting to update contacts where email__c = $1", [user.email__c]);
-                    //db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [endpoint, user.email__c]);
                     
                     logUserInteraction(user.externaluserid,'Logged In','Node.js auth',os)    
                     .then             

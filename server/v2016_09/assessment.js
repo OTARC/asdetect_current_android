@@ -47,8 +47,7 @@ function getById(req, res, next) {
 
 // add 12 month assessment
 
-//Version 1.1 
-//12M assessment was subject to a transposition error - NB as of this version eyecontact and pointing have now been swapped
+//Version 2.0
 
 function create12mAssessment(req, res, next) {
     winston.info('create12mAssessment()');
@@ -56,16 +55,16 @@ function create12mAssessment(req, res, next) {
     var externalUserId = req.externalUserId,
     externalchildid__c=req.body.externalchildid__c,
     consultation_date__c = req.body.consultation_date__c,
-    pointing__c=req.body.does_child_make_eye_contact_with_you__c,
-    does_child_make_eye_contact_with_you__c=req.body.pointing__c,
+    pointing__c=req.body.pointing__c,
+    does_child_make_eye_contact_with_you__c=req.body.does_child_make_eye_contact_with_you__c,
     waves_bye_bye__c=req.body.waves_bye_bye__c,
     imitation__c=req.body.imitation__c, 
     responds_to_name__c=req.body.responds_to_name__c,
+    follows_point__c=req.body.follows_point__c,
     social_smile__c=req.body.social_smile__c, 
     conversational_babble__c=req.body.conversational_babble__c,
     says_1_3_clear_words__c=req.body.says_1_3_clear_words__c, 
     understands_obeys_simple_instructions__c=req.body.understands_obeys_simple_instructions__c, 
-    attending_to_sounds__c=req.body.attending_to_sounds__c;
     
     winston.info('create12mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
 
@@ -78,11 +77,11 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
     isEmpty('imitation__c',imitation__c)||
     isEmpty('responds_to_name__c',responds_to_name__c)||
+    isEmpty('follows_point__c',follows_point__c)||
     isEmpty('social_smile__c',social_smile__c) ||
     isEmpty('conversational_babble__c',conversational_babble__c)||
     isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
-    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-    isEmpty('attending_to_sounds__c',attending_to_sounds__c) ) 
+    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)) 
 {
     return res.send(400, missingAssessmentInformation);
 }

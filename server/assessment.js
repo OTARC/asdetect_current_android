@@ -47,7 +47,7 @@ function getById(req, res, next) {
 
 // add 12 month assessment
 
-//Version 1.1 
+//Version 1.1 - LEGACY METHOD
 //12M assessment was subject to a transposition error - NB as of this version eyecontact and pointing have now been swapped
 
 function create12mAssessment(req, res, next) {
@@ -70,22 +70,22 @@ function create12mAssessment(req, res, next) {
     winston.info('create12mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
 
 
-//basic error checking
+    //basic error checking
 
-if (isEmpty('consultation_date__c',consultation_date__c) || 
-    isEmpty('pointing__c',pointing__c)|| 
-    isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)|| 
-    isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
-    isEmpty('imitation__c',imitation__c)||
-    isEmpty('responds_to_name__c',responds_to_name__c)||
-    isEmpty('social_smile__c',social_smile__c) ||
-    isEmpty('conversational_babble__c',conversational_babble__c)||
-    isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
-    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-    isEmpty('attending_to_sounds__c',attending_to_sounds__c) ) 
-{
-    return res.send(400, missingAssessmentInformation);
-}
+    if (isEmpty('consultation_date__c',consultation_date__c) || 
+        isEmpty('pointing__c',pointing__c)|| 
+        isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)|| 
+        isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
+        isEmpty('imitation__c',imitation__c)||
+        isEmpty('responds_to_name__c',responds_to_name__c)||
+        isEmpty('social_smile__c',social_smile__c) ||
+        isEmpty('conversational_babble__c',conversational_babble__c)||
+        isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
+        isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
+        isEmpty('attending_to_sounds__c',attending_to_sounds__c) ) 
+    {
+        return res.send(400, missingAssessmentInformation);
+    }
 
 
     //var recordtypeid='012j0000000mFHuAAM'; -- moved to config
@@ -226,28 +226,28 @@ function create24mAssessment(req, res, next) {
     winston.info('create24mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
     
 
-//basic error checking
+    //basic error checking
 
-if (isEmpty('consultation_date__c',consultation_date__c) || 
-    isEmpty('pointing__c',pointing__c)||
-    isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)  || 
-    isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
-    isEmpty('imitation__c',imitation__c)||
-    isEmpty('responds_to_name__c',responds_to_name__c)||
-    isEmpty('social_smile__c',social_smile__c) ||  
-    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-    isEmpty('showing__c',showing__c)||
-    isEmpty('pretend_play__c',pretend_play__c)||
-    isEmpty('follows_point__c',follows_point__c)||
-    isEmpty('loss_of_skills__c',loss_of_skills__c)||
-    isEmpty('uses_20_50_words__c',uses_20_50_words__c)||
-    isEmpty('two_word_utterances__c',two_word_utterances__c)||
-    isEmpty('parallel_play__c',parallel_play__c)||
-    isEmpty('interest_in_other_children__c',interest_in_other_children__c)
+    if (isEmpty('consultation_date__c',consultation_date__c) || 
+        isEmpty('pointing__c',pointing__c)||
+        isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)  || 
+        isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
+        isEmpty('imitation__c',imitation__c)||
+        isEmpty('responds_to_name__c',responds_to_name__c)||
+        isEmpty('social_smile__c',social_smile__c) ||  
+        isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
+        isEmpty('showing__c',showing__c)||
+        isEmpty('pretend_play__c',pretend_play__c)||
+        isEmpty('follows_point__c',follows_point__c)||
+        isEmpty('loss_of_skills__c',loss_of_skills__c)||
+        isEmpty('uses_20_50_words__c',uses_20_50_words__c)||
+        isEmpty('two_word_utterances__c',two_word_utterances__c)||
+        isEmpty('parallel_play__c',parallel_play__c)||
+        isEmpty('interest_in_other_children__c',interest_in_other_children__c)
 
     ) {
     return res.send(400, missingAssessmentInformation);
-}
+    }
 
 
     //var recordtypeid='012j0000000mFHuAAM'; -- moved to config
