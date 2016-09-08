@@ -74,7 +74,7 @@ function addChild(req, res, next) {
     winston.info('addChild(): generated externalchildid__c='+externalchildid__c);
     
         
-            db.query('INSERT INTO latrobeasdetect.mch_child_asdetect__c (asdetect_contact__r__loyaltyid__c, childs_initials__c,child_s_first_name__c,child_s_last_name__c,childs_nickname__c,birthdate__c,gender__c,diagnosis__c,externalchildid__c,adult_can_act_on_child_s_behalf__c,OTARC_can_use_childs_data_for_research__c,child_has_a_sibling_with_an_asd__c,rest_endpoint_version__c) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)', [externalUserId, childs_initials__c,child_s_first_name__c,child_s_last_name__c,childs_nickname__c,birthdate__c,gender__c,diagnosis__c,externalchildid__c,adult_can_act_on_child_s_behalf__c,OTARC_can_use_childs_data_for_research__c,child_has_a_sibling_with_an_asd__c,version.endpoint, true)
+            db.query('INSERT INTO latrobeasdetect.mch_child_asdetect__c (asdetect_contact__r__loyaltyid__c, childs_initials__c,child_s_first_name__c,child_s_last_name__c,childs_nickname__c,birthdate__c,gender__c,diagnosis__c,externalchildid__c,adult_can_act_on_child_s_behalf__c,OTARC_can_use_childs_data_for_research__c,child_has_a_sibling_with_an_asd__c,rest_endpoint_version__c) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)', [externalUserId, childs_initials__c,child_s_first_name__c,child_s_last_name__c,childs_nickname__c,birthdate__c,gender__c,diagnosis__c,externalchildid__c,adult_can_act_on_child_s_behalf__c,OTARC_can_use_childs_data_for_research__c,child_has_a_sibling_with_an_asd__c,version.endpoint, true);
 
                 .then(function () {
                     return res.send({'externalchildid__c':externalchildid__c});
