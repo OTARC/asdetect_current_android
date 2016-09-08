@@ -64,7 +64,7 @@ function create12mAssessment(req, res, next) {
     social_smile__c=req.body.social_smile__c, 
     conversational_babble__c=req.body.conversational_babble__c,
     says_1_3_clear_words__c=req.body.says_1_3_clear_words__c, 
-    understands_obeys_simple_instructions__c=req.body.understands_obeys_simple_instructions__c, 
+    understands_obeys_simple_instructions__c=req.body.understands_obeys_simple_instructions__c; 
     
     winston.info('create12mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
 
