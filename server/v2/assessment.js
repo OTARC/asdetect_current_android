@@ -1,7 +1,8 @@
 var db = require('./pghelper'),
- config = require('./config'),
- missingAssessmentInformation='One or more mandatory fields on this Assessment is missing.',
- winston = require('winston');
+    config = require('./config'),
+    missingAssessmentInformation='One or more mandatory fields on this Assessment is missing.',
+    winston = require('winston'),
+    version = require('./version');
 
 
 //helper function for input validation
@@ -106,7 +107,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     
 
     // insert into Postgres
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,'1.1'], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, follows_point__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, follows_point__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c,externalatrisk__c,version.endpoint], true)
     .then(function () {                    
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
