@@ -1,4 +1,5 @@
 var db = require('./pghelper'),
+    config = require('./config'),
     Q = require('q');
     //wallet = require('./wallet'),
     //wishlist = require('./wishlist');

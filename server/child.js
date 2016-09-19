@@ -1,4 +1,5 @@
 var db = require('./pghelper'),
+    config = require('./config'),
     winston = require('winston'),
     uuid = require('node-uuid'),
     missingChildInformation ='One or more mandatory fields are missing for this Child - (child_s_first_name__c, child_s_last_name__c, gender__c, birthdate__c, adult_can_act_on_child_s_behalf__c). Please refer to API guide.',
