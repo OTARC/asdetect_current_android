@@ -1,8 +1,7 @@
 var db = require('./pghelper'),
     config = require('./config'),
     missingAssessmentInformation='One or more mandatory fields on this Assessment is missing.',
-    winston = require('winston'),
-    version = require('./version');
+    winston = require('winston');
 
 
 //helper function for input validation

@@ -6,8 +6,7 @@ var bcrypt = require('bcrypt'),
     validator = require('validator'),
     winston = require('winston'),
     UAParser = require('ua-parser-js'),
-    invalidCredentials = 'Invalid email or password',
-    version = require('./version');
+    invalidCredentials = 'Invalid email or password';
 
 /**
  * Encrypt password with per-user salt
