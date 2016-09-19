@@ -33,7 +33,7 @@ module.exports = {
         recordType35Y: process.env.recordType35Y,
         tokenlife: '00:00:00'
 
-    }
+    },
 
     //Used for segmenting ASDetect Contacts based on the version of the app they're using
     restEndpointVersion: "1.1"
