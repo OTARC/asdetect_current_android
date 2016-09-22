@@ -141,7 +141,7 @@ function login(req, res, next) {
     default:
     //is not an ipad or iphone or android? - lets do the best we can to find out the agent os
         os=parser.setUA(ua).getResult().os.name;
-}
+    }
 
     // Don't allow empty passwords which may allow people to login using the email address of a Facebook user since
     // these users don't have passwords
@@ -160,7 +160,6 @@ function login(req, res, next) {
                 
                 //If password matches, log user in and create interaction record
                 if (match) {  
-                    
                     //Update REST Endpoint Version of user - needed for segmented system logic such as email communication
                     console.log('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);
                     db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);
