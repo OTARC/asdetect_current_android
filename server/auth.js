@@ -33,6 +33,8 @@ function encryptPassword(password, callback) {
  */
 function comparePassword(password, hash, callback) {
     winston.info('comparePassword(): checking password for match');
+    winston.info('comparePassword(): password is'+password);
+    winston.info('comparePassword(): password is'+hash);
 
     bcrypt.compare(password, hash, function (err, match) {
         if (err) {
