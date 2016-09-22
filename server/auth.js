@@ -76,7 +76,7 @@ function logUserInteraction(externaluserid,itype,idescription,ios) {
     var token = uuid.v4(),  
     deferred = Q.defer();
     db.query('INSERT INTO latrobeasdetect.asdetect_interaction__c (asdetect_contact__r__loyaltyid__c, type__c,description__c,os__c,rest_endpoint_version__c) VALUES ($1, $2, $3, $4,$5)',
-                    [externaluserid, itype, idescription,ios,'1.0'], true)
+                    [externaluserid, itype, idescription,ios,config.restEndpointVersion], true)
     .then(function() {
             deferred.resolve(token);
         })
@@ -119,6 +119,7 @@ function login(req, res, next) {
     var creds = req.body;
 
     winston.info('login(): '+creds.email__c);
+    winston.info('login(): body - ', creds);
     //console.log(creds);
 
     var parser = new UAParser();
@@ -159,13 +160,20 @@ function login(req, res, next) {
                 
                 //If password matches, log user in and create interaction record
                 if (match) {  
+<<<<<<< HEAD
                     //updateRESTEndpointVersion(user)
                     //.then
                     
                     //Code has been changed
                     console.log("attempting to update contacts where email__c = $1", [user.email__c]);
                     //db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [endpoint, user.email__c]);
+=======
+>>>>>>> 75bd8d52a9bbf5193d097548a213f763904262bb
                     
+                    //Update REST Endpoint Version of user - needed for segmented system logic such as email communication
+                    console.log('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);
+                    db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);
+
                     logUserInteraction(user.externaluserid,'Logged In','Node.js auth',os)    
                     .then             
                     cleanupAccessTokens(user)
@@ -319,8 +327,8 @@ function createUser(user, password) {
         //external userid is the EXTERNALID in the ASDetect_Contact__c table - it's critical for hooking up the MCH_Child_Asdetect__C detail records
         //externalUserId = (+new Date()).toString(36); // TODO: more robust UID logic
         externalUserId=uuid.v4();  
-    db.query('INSERT INTO latrobeasdetect.asdetect_contact__c (email__c, password__c, firstname__c, lastname__c, country__c, loyaltyid__c,rest_endpoint_version__c) VALUES ($1, $2, $3, $4, $5, $6,$7) RETURNING id, firstname__c, lastname__c, email__c, loyaltyid__c as externalUserId,rest_endpoint_version__c',
-        [user.email__c, password, user.firstname__c, user.lastname__c, user.country__c, externalUserId, 'V1Dot1'], true)
+    db.query('INSERT INTO latrobeasdetect.asdetect_contact__c (email__c, password__c, firstname__c, lastname__c, country__c, loyaltyid__c) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, firstname__c, lastname__c, email__c, loyaltyid__c as externalUserId',
+        [user.email__c, password, user.firstname__c, user.lastname__c, user.country__c, externalUserId], true)
 
         .then(function (insertedUser) {
             deferred.resolve(insertedUser);

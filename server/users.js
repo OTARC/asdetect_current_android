@@ -15,7 +15,7 @@ externalUserId = req.externalUserId;
 winston.info('getProfile(): externalUserId='+externalUserId);
    
             db.query(
-                    'SELECT id, sfid, name, loyaltyid__c,firstname__c , lastname__c , email__c,createddate,preference__c ,size__c,_hc_lastop,_hc_err FROM latrobeasdetect.asdetect_contact__c WHERE loyaltyid__c=$1',
+                    'SELECT id, sfid, name, loyaltyid__c,firstname__c , lastname__c , email__c,createddate,preference__c ,size__c,rest_endpoint_version__c,_hc_lastop,_hc_err FROM latrobeasdetect.asdetect_contact__c WHERE loyaltyid__c=$1',
                     [externalUserId], true)
                 .then(function (user) {
                     //dtermine what to do with Points later - perhaps we could introduce a membership concept??
@@ -50,16 +50,6 @@ winston.info('updateProfile()');
         .catch(next);
 };
 
-
-function updateRESTEndpointVersion(user) {
-    winston.info('updateRESTEndpointVersion()');
-    var endpoint = '2.0';
-
-    console.log('updateRESTEndpointVersion()');
-
-    db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [endpoint, user.email__c]);
-
-}
 
 
 exports.getProfile = getProfile;

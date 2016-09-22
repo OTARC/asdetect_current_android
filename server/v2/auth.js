@@ -76,7 +76,7 @@ function logUserInteraction(externaluserid,itype,idescription,ios) {
     var token = uuid.v4(),  
     deferred = Q.defer();
     db.query('INSERT INTO latrobeasdetect.asdetect_interaction__c (asdetect_contact__r__loyaltyid__c, type__c,description__c,os__c,rest_endpoint_version__c) VALUES ($1, $2, $3, $4,$5)',
-                    [externaluserid, itype, idescription,ios,'1.0'], true)
+                    [externaluserid, itype, idescription,ios,version.endpoint], true)
     .then(function() {
             deferred.resolve(token);
         })
@@ -159,6 +159,11 @@ function login(req, res, next) {
                 
                 //If password matches, log user in and create interaction record
                 if (match) {  
+
+                    //Update REST Endpoint Version of user - needed for segmented system logic such as email communication
+                    console.log('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);
+                    db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);
+
                      logUserInteraction(user.externaluserid,'Logged In','Node.js auth',os)    
                      .then             
                      cleanupAccessTokens(user)
@@ -313,8 +318,8 @@ function createUser(user, password) {
         //externalUserId = (+new Date()).toString(36); // TODO: more robust UID logic
         externalUserId=uuid.v4();
 
-    db.query('INSERT INTO latrobeasdetect.asdetect_contact__c (email__c, password__c, firstname__c, lastname__c, country__c, loyaltyid__c,rest_endpoint_version__c) VALUES ($1, $2, $3, $4, $5, $6,$7) RETURNING id, firstname__c, lastname__c, email__c, loyaltyid__c as externalUserId',
-        [user.email__c, password, user.firstname__c, user.lastname__c, user.country__c, externalUserId,'1.0'], true)
+    db.query('INSERT INTO latrobeasdetect.asdetect_contact__c (email__c, password__c, firstname__c, lastname__c, country__c, loyaltyid__c) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, firstname__c, lastname__c, email__c, loyaltyid__c as externalUserId',
+        [user.email__c, password, user.firstname__c, user.lastname__c, user.country__c, externalUserId], true)
         .then(function (insertedUser) {
             deferred.resolve(insertedUser);
         })

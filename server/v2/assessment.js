@@ -1,7 +1,7 @@
 var db = require('./pghelper'),
- config = require('./config'),
- missingAssessmentInformation='One or more mandatory fields on this Assessment is missing.',
- winston = require('winston');
+    config = require('./config'),
+    missingAssessmentInformation='One or more mandatory fields on this Assessment is missing.',
+    winston = require('winston');
 
 
 //helper function for input validation
@@ -47,8 +47,7 @@ function getById(req, res, next) {
 
 // add 12 month assessment
 
-//Version 1.1 
-//12M assessment was subject to a transposition error - NB as of this version eyecontact and pointing have now been swapped
+//Version 2.0
 
 function create12mAssessment(req, res, next) {
     winston.info('create12mAssessment()');
@@ -56,16 +55,16 @@ function create12mAssessment(req, res, next) {
     var externalUserId = req.externalUserId,
     externalchildid__c=req.body.externalchildid__c,
     consultation_date__c = req.body.consultation_date__c,
-    pointing__c=req.body.does_child_make_eye_contact_with_you__c,
-    does_child_make_eye_contact_with_you__c=req.body.pointing__c,
+    pointing__c=req.body.pointing__c,
+    does_child_make_eye_contact_with_you__c=req.body.does_child_make_eye_contact_with_you__c,
     waves_bye_bye__c=req.body.waves_bye_bye__c,
     imitation__c=req.body.imitation__c, 
     responds_to_name__c=req.body.responds_to_name__c,
+    follows_point__c=req.body.follows_point__c,
     social_smile__c=req.body.social_smile__c, 
     conversational_babble__c=req.body.conversational_babble__c,
     says_1_3_clear_words__c=req.body.says_1_3_clear_words__c, 
-    understands_obeys_simple_instructions__c=req.body.understands_obeys_simple_instructions__c, 
-    attending_to_sounds__c=req.body.attending_to_sounds__c;
+    understands_obeys_simple_instructions__c=req.body.understands_obeys_simple_instructions__c; 
     
     winston.info('create12mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
 
@@ -78,11 +77,11 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
     isEmpty('imitation__c',imitation__c)||
     isEmpty('responds_to_name__c',responds_to_name__c)||
+    isEmpty('follows_point__c',follows_point__c)||
     isEmpty('social_smile__c',social_smile__c) ||
     isEmpty('conversational_babble__c',conversational_babble__c)||
     isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
-    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-    isEmpty('attending_to_sounds__c',attending_to_sounds__c) ) 
+    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)) 
 {
     return res.send(400, missingAssessmentInformation);
 }
@@ -107,7 +106,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     
 
     // insert into Postgres
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,'1.1'], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, follows_point__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, follows_point__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c,externalatrisk__c,version.endpoint], true)
     .then(function () {                    
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
@@ -188,7 +187,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     
 
 //insert into Postgres
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,'1.0'], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,version.endpoint], true)
     .then(function () {                   
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
@@ -268,7 +267,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     winston.info('create24mAssessment(): Calculated external AtRisk:' + externalatrisk__c + ':count is '+ no_of_atypical_key_items);
     
 
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,'1.0'], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,endpoint.version], true)
     .then(function () {                   
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
@@ -364,7 +363,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     winston.info('create35yAssessment(): Calculated external AtRisk (dont forget! for 35Y eyecontact is an override:' + externalatrisk__c + ':count is '+ no_of_atypical_key_items);
     
         
-        db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,'1.0'], true)
+        db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,version.endpoint], true)
         .then(function () {                   
             //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});

@@ -12,7 +12,7 @@ function isEmpty(field,val){
 
 function findById(externalUserId,id) {
     // Retrieve offer either by Salesforce id or Postgress id
-    return db.query('select c.id,c.sfid,c.name,m.childs_initials__c,m.child_s_first_name__c,m.child_s_last_name__c,m.childs_nickname__c,c.consultation_date__c,c.record_type__c ,c.mch_child_asdetect__r__externalchildid__c as externalchildid, c.mch_child_asdetect__c,c.at_risk__c,c.age_at_time_of_assessment_years_months__c,c._hc_lastop,c._hc_err from latrobeasdetect.consultation_asdetect__c c,latrobeasdetect.mch_child_asdetect__c m where c.mch_child_asdetect__r__externalchildid__c=m.externalchildid__c and m.asdetect_contact__r__loyaltyid__c=$1 and ' + (isNaN(id) ? 'c.sfId' : 'c.id') + '=$2', [externalUserId,id], true);
+    return db.query('select c.id,c.sfid,c.name,m.childs_initials__c,m.child_s_first_name__c,m.child_s_last_name__c,m.childs_nickname__c,c.consultation_date__c,c.record_type__c ,c.mch_child_asdetect__r__externalchildid__c as externalchildid, c.mch_child_asdetect__c,c.at_risk__c,c.age_at_time_of_assessment_years_months__c, rest_endpoint_version__c, c._hc_lastop,c._hc_err from latrobeasdetect.consultation_asdetect__c c,latrobeasdetect.mch_child_asdetect__c m where c.mch_child_asdetect__r__externalchildid__c=m.externalchildid__c and m.asdetect_contact__r__loyaltyid__c=$1 and ' + (isNaN(id) ? 'c.sfId' : 'c.id') + '=$2', [externalUserId,id], true);
 };
 
 function getAll(req, res, next) { 
@@ -47,7 +47,7 @@ function getById(req, res, next) {
 
 // add 12 month assessment
 
-//Version 1.1 
+//Version 1.1 - LEGACY METHOD
 //12M assessment was subject to a transposition error - NB as of this version eyecontact and pointing have now been swapped
 
 function create12mAssessment(req, res, next) {
@@ -70,22 +70,22 @@ function create12mAssessment(req, res, next) {
     winston.info('create12mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
 
 
-//basic error checking
+    //basic error checking
 
-if (isEmpty('consultation_date__c',consultation_date__c) || 
-    isEmpty('pointing__c',pointing__c)|| 
-    isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)|| 
-    isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
-    isEmpty('imitation__c',imitation__c)||
-    isEmpty('responds_to_name__c',responds_to_name__c)||
-    isEmpty('social_smile__c',social_smile__c) ||
-    isEmpty('conversational_babble__c',conversational_babble__c)||
-    isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
-    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-    isEmpty('attending_to_sounds__c',attending_to_sounds__c) ) 
-{
-    return res.send(400, missingAssessmentInformation);
-}
+    if (isEmpty('consultation_date__c',consultation_date__c) || 
+        isEmpty('pointing__c',pointing__c)|| 
+        isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)|| 
+        isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
+        isEmpty('imitation__c',imitation__c)||
+        isEmpty('responds_to_name__c',responds_to_name__c)||
+        isEmpty('social_smile__c',social_smile__c) ||
+        isEmpty('conversational_babble__c',conversational_babble__c)||
+        isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
+        isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
+        isEmpty('attending_to_sounds__c',attending_to_sounds__c) ) 
+    {
+        return res.send(400, missingAssessmentInformation);
+    }
 
 
     //var recordtypeid='012j0000000mFHuAAM'; -- moved to config
@@ -107,7 +107,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     
 
     // insert into Postgres
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,'1.1'], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,config.restEndpointVersion], true)
     .then(function () {                    
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
@@ -188,7 +188,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     
 
 //insert into Postgres
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,'1.0'], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,uses_5_10_words__c,understands_words__c,points_to_facial_features__c,loss_of_skills__c,externalatrisk__c,config.restEndpointVersion], true)
     .then(function () {                   
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
@@ -226,28 +226,28 @@ function create24mAssessment(req, res, next) {
     winston.info('create24mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
     
 
-//basic error checking
+    //basic error checking
 
-if (isEmpty('consultation_date__c',consultation_date__c) || 
-    isEmpty('pointing__c',pointing__c)||
-    isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)  || 
-    isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
-    isEmpty('imitation__c',imitation__c)||
-    isEmpty('responds_to_name__c',responds_to_name__c)||
-    isEmpty('social_smile__c',social_smile__c) ||  
-    isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-    isEmpty('showing__c',showing__c)||
-    isEmpty('pretend_play__c',pretend_play__c)||
-    isEmpty('follows_point__c',follows_point__c)||
-    isEmpty('loss_of_skills__c',loss_of_skills__c)||
-    isEmpty('uses_20_50_words__c',uses_20_50_words__c)||
-    isEmpty('two_word_utterances__c',two_word_utterances__c)||
-    isEmpty('parallel_play__c',parallel_play__c)||
-    isEmpty('interest_in_other_children__c',interest_in_other_children__c)
+    if (isEmpty('consultation_date__c',consultation_date__c) || 
+        isEmpty('pointing__c',pointing__c)||
+        isEmpty('does_child_make_eye_contact_with_you__c',does_child_make_eye_contact_with_you__c)  || 
+        isEmpty('waves_bye_bye__c',waves_bye_bye__c) || 
+        isEmpty('imitation__c',imitation__c)||
+        isEmpty('responds_to_name__c',responds_to_name__c)||
+        isEmpty('social_smile__c',social_smile__c) ||  
+        isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
+        isEmpty('showing__c',showing__c)||
+        isEmpty('pretend_play__c',pretend_play__c)||
+        isEmpty('follows_point__c',follows_point__c)||
+        isEmpty('loss_of_skills__c',loss_of_skills__c)||
+        isEmpty('uses_20_50_words__c',uses_20_50_words__c)||
+        isEmpty('two_word_utterances__c',two_word_utterances__c)||
+        isEmpty('parallel_play__c',parallel_play__c)||
+        isEmpty('interest_in_other_children__c',interest_in_other_children__c)
 
     ) {
     return res.send(400, missingAssessmentInformation);
-}
+    }
 
 
     //var recordtypeid='012j0000000mFHuAAM'; -- moved to config
@@ -268,7 +268,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     winston.info('create24mAssessment(): Calculated external AtRisk:' + externalatrisk__c + ':count is '+ no_of_atypical_key_items);
     
 
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,'1.0'], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, understands_obeys_simple_instructions__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,uses_20_50_words__c,two_word_utterances__c,parallel_play__c,interest_in_other_children__c,externalatrisk__c,config.restEndpointVersion], true)
     .then(function () {                   
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
@@ -364,7 +364,7 @@ if (isEmpty('consultation_date__c',consultation_date__c) ||
     winston.info('create35yAssessment(): Calculated external AtRisk (dont forget! for 35Y eyecontact is an override:' + externalatrisk__c + ':count is '+ no_of_atypical_key_items);
     
         
-        db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,'1.0'], true)
+        db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, responds_to_name__c, social_smile__c,showing__c,pretend_play__c,follows_point__c,loss_of_skills__c,follows_two_unrelated_commands__c,odd_or_unusual_speech__c,sensory_behaviours_and_interests__c,reciprocal_social_interaction__c,gestures__c,sharing_interest__c,uses_5_6_word_sentences__c,conversation__c,hand_as_a_tool__c,immediate_echolalia__c,pronoun_reversals__c,repetitive_speech__c,motor_stereotypes__c,rep_rest_behaviours_and_interests__c,externalatrisk__c,config.restEndpointVersion], true)
         .then(function () {                   
             //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
