@@ -33,6 +33,8 @@ function encryptPassword(password, callback) {
  */
 function comparePassword(password, hash, callback) {
     winston.info('comparePassword(): checking password for match');
+    winston.info('comparePassword(): password is '+password);
+    winston.info('comparePassword(): hash is '+hash);
 
     bcrypt.compare(password, hash, function (err, match) {
         if (err) {
@@ -141,7 +143,7 @@ function login(req, res, next) {
     default:
     //is not an ipad or iphone or android? - lets do the best we can to find out the agent os
         os=parser.setUA(ua).getResult().os.name;
-}
+    }
 
     // Don't allow empty passwords which may allow people to login using the email address of a Facebook user since
     // these users don't have passwords
@@ -160,16 +162,14 @@ function login(req, res, next) {
                 
                 //If password matches, log user in and create interaction record
                 if (match) {  
-<<<<<<< HEAD
+
                     //updateRESTEndpointVersion(user)
                     //.then
                     
                     //Code has been changed
                     console.log("attempting to update contacts where email__c = $1", [user.email__c]);
                     //db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [endpoint, user.email__c]);
-=======
->>>>>>> 75bd8d52a9bbf5193d097548a213f763904262bb
-                    
+
                     //Update REST Endpoint Version of user - needed for segmented system logic such as email communication
                     console.log('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);
                     db.query('update latrobeasdetect.asdetect_contact__c SET REST_endpoint_version__c=$1 WHERE email__c=$2', [config.restEndpointVersion, user.email__c]);

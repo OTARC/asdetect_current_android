@@ -19,7 +19,7 @@ var express = require('express'),
     assessment=require('./server/assessment');
 
     //V2 App modules
-    users_v2 = require('./server/v2/users'),
+    /*users_v2 = require('./server/v2/users'),
     cases_v2 = require('./server/v2/cases'),
     auth_v2 = require('./server/v2/auth'),
     facebook_v2 = require('./server/v2/facebook'),
@@ -27,7 +27,7 @@ var express = require('express'),
     utilities_v2=require('./server/v2/utilities.js'),
     interactions_v2 = require('./server/v2/interactions'),
     child_v2=require('./server/v2/child'),
-    assessment_v2=require('./server/v2/assessment');
+    assessment_v2=require('./server/v2/assessment');*/
 
 
 app = express();
@@ -90,7 +90,7 @@ app.post('/validateTokenForUser',auth.validateTokenForUser);
 
 //V2 Endpoint methods
 //
-
+/*
 app.post('/v2/login', auth_v2.login);
 app.post('/v2/logout', auth_v2.validateToken, auth_v2.logout);
 
@@ -124,7 +124,7 @@ app.get('/v2/deleteContactAndChildrenAndTests',auth_v2.validateToken,utilities_v
 app.get('/v2/deleteContactAndChildrenAndTestsByLastName/:lastname',auth_v2.validateToken,utilities_v2.deleteContactAndChildrenAndTestsByLastName);
 app.delete('/v2/interactions', auth_v2.validateToken, interactions_v2.deleteAll);
 app.post('/v2/validateTokenForUser',auth_v2.validateTokenForUser);
-
+*/
 
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

@@ -61,6 +61,7 @@ function create12mAssessment(req, res, next) {
     waves_bye_bye__c=req.body.waves_bye_bye__c,
     imitation__c=req.body.imitation__c, 
     responds_to_name__c=req.body.responds_to_name__c,
+    follows_point__c=req.body.follows_point__c,
     social_smile__c=req.body.social_smile__c, 
     conversational_babble__c=req.body.conversational_babble__c,
     says_1_3_clear_words__c=req.body.says_1_3_clear_words__c, 
@@ -82,7 +83,12 @@ function create12mAssessment(req, res, next) {
         isEmpty('conversational_babble__c',conversational_babble__c)||
         isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
         isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-        isEmpty('attending_to_sounds__c',attending_to_sounds__c) ) 
+        //Due to change in questions, precisely ONE of these two questions below should appear
+        //Added question
+        (isEmpty('follows_point__c',follows_point__c) &&
+        //Legacy Question
+        isEmpty('attending_to_sounds__c',attending_to_sounds__c)) ) 
+
     {
         return res.send(400, missingAssessmentInformation);
     }
@@ -107,7 +113,7 @@ function create12mAssessment(req, res, next) {
     
 
     // insert into Postgres
-    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid,consultation_date__c,mch_child_asdetect__r__externalchildid__c ,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,config.restEndpointVersion], true)
+    db.query('insert into latrobeasdetect.consultation_asdetect__c (recordtypeid, consultation_date__c, mch_child_asdetect__r__externalchildid__c, pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, follows_point__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,rest_endpoint_version__c) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)', [recordtypeid,consultation_date__c,externalchildid__c,pointing__c, does_child_make_eye_contact_with_you__c, waves_bye_bye__c, imitation__c, responds_to_name__c, follows_point__c, social_smile__c, conversational_babble__c,says_1_3_clear_words__c, understands_obeys_simple_instructions__c, attending_to_sounds__c,externalatrisk__c,config.restEndpointVersion], true)
     .then(function () {                    
         //return the calculated at risk
         return res.send({'externalatrisk__c':externalatrisk__c});
