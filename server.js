@@ -27,7 +27,8 @@ var express = require('express'),
     utilities_v2=require('./server/v2/utilities.js'),
     interactions_v2 = require('./server/v2/interactions'),
     child_v2=require('./server/v2/child'),
-    assessment_v2=require('./server/v2/assessment');*/
+    assessment_v2=require('./server/v2/assessment');
+    */
 
 
 app = express();
