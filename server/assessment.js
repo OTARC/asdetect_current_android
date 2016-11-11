@@ -67,9 +67,11 @@ function create12mAssessment(req, res, next) {
     says_1_3_clear_words__c=req.body.says_1_3_clear_words__c, 
     understands_obeys_simple_instructions__c=req.body.understands_obeys_simple_instructions__c, 
     attending_to_sounds__c=req.body.attending_to_sounds__c;
-    
+
     winston.info('create12mAssessment(): externalUserId='+externalUserId+', externalchildid__c='+externalchildid__c);
 
+    //Adjust payload - make sure that if 'Follows Point' has a value, 'Attending to sounds' does not
+    if (follows_point__c != null){attending_to_sounds__c = null;}
 
     //basic error checking
 
