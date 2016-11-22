@@ -85,7 +85,7 @@ function create12mAssessment(req, res, next) {
         isEmpty('conversational_babble__c',conversational_babble__c)||
         isEmpty('says_1_3_clear_words__c',says_1_3_clear_words__c)||
         isEmpty('understands_obeys_simple_instructions__c',understands_obeys_simple_instructions__c)||
-        //Due to change in questions, precisely ONE of these two questions below should appear
+        //Due to change in questions, one or both of these two questions below should appear
         //Added question
         (isEmpty('follows_point__c',follows_point__c) &&
         //Legacy Question
