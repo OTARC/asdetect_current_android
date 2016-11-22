@@ -36,6 +36,6 @@ module.exports = {
     },
 
     //Used for segmenting ASDetect Contacts based on the version of the app they're using
-    restEndpointVersion: "1.1"
+    restEndpointVersion: process.env.restEndpointVersion
 
 };
