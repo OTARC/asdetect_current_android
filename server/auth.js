@@ -255,7 +255,7 @@ function signup(req, res, next) {
         .then(function (u) {
             if(u) {
                 winston.info('signup(): ERROR  Email address '+user.email__c+ ' already exists');
-                return res.send(400, "Email address is already registered");
+                return res.send(400, "Sorry, that email is already registered");
             }
             encryptPassword(user.password__c, function (err, hash) {
                 if (err) return next(err);
@@ -410,7 +410,7 @@ function validateTokenForUser (req, res, next) {
                 winston.info('validateToken(): ERROR Invalid token');
                 return res.send(401, 'Invalid token');
             }
-            winston.info('vaidateToken(): Validated token '+token+' for req.path='+req.path+' externaluserid='+req.externalUserId);
+            winston.info('validateToken(): Validated token '+token+' for req.path='+req.path+' externaluserid='+req.externalUserId);
             return res.send('ok');
         })
         .catch(next);
