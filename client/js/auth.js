@@ -51,7 +51,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                 url: "/resetpassword/:password_reset_token__c/:email__c",
                 views: {
                     'menuContent' :{
-                        templateUrl: "templates/resetpassword2.html",
+                        templateUrl: "templates/resetpassword.html",
                         controller: "ResetPasswordCtrl"
                     }
                 }
