@@ -57,6 +57,17 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                 }
             })
 
+            .state('app.evalstudysetpassword', {
+                url: "/evalstudysetpassword/:password_reset_token__c/:email__c",
+                views: {
+                    'menuContent' :{
+                        templateUrl: "templates/evalstudysetpassword.html",
+                        controller: "ResetPasswordCtrl"
+                    }
+                }
+            })
+
+
     })
 
     /*
@@ -112,7 +123,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             },
             logout: function () {
                 
-return $http.post($rootScope.server.url + '/logout')
+                return $http.post($rootScope.server.url + '/logout')
                     .success(function (data) {
                         
                         console.log('logged out');
@@ -238,7 +249,7 @@ return $http.post($rootScope.server.url + '/logout')
 
 
 
-     .controller('RequestResetPasswordCtrl', function ($scope, $state, $ionicPopup, $rootScope, $window, Auth, Interaction) {
+    .controller('RequestResetPasswordCtrl', function ($scope, $state, $ionicPopup, $rootScope, $window, Auth, Interaction) {
 
             /*
                Interaction.create({type__c: "Logged out", description__c:"Called from Angular asdetect.auth",externalchildid__c:""})
@@ -247,9 +258,9 @@ return $http.post($rootScope.server.url + '/logout')
             });
             */
 
- $scope.user= {};
+        $scope.user= {};
 
-   $scope.requestresetpassword = function () {
+        $scope.requestresetpassword = function () {
            
             Auth.requestresetpassword($scope.user)
                 .success(function (data) {
@@ -266,16 +277,16 @@ return $http.post($rootScope.server.url + '/logout')
      })
 
 
- .controller('ResetPasswordCtrl', function ($scope, $state, $ionicPopup, $rootScope, $stateParams, $window, Auth, Interaction) {
+    .controller('ResetPasswordCtrl', function ($scope, $state, $ionicPopup, $rootScope, $stateParams, $window, Auth, Interaction) {
 
 
- $scope.user = {};
- $scope.user.password_reset_token__c=$stateParams.password_reset_token__c;
- $scope.user.email__c=$stateParams.email__c;
+        $scope.user = {};
+        $scope.user.password_reset_token__c=$stateParams.password_reset_token__c;
+        $scope.user.email__c=$stateParams.email__c;
 
 
- $scope.resetpassword = function () {
-           if ($scope.user.password__c !== $scope.user.password2__c) {
+        $scope.resetpassword = function () {
+            if ($scope.user.password__c !== $scope.user.password2__c) {
                 $ionicPopup.alert({title: 'Oops', content: "passwords don't match"});
                 return;
             }
@@ -289,9 +300,24 @@ return $http.post($rootScope.server.url + '/logout')
                         });
         };
 
+        $scope.evalstudysetpassword = function () {
+            if ($scope.user.password__c !== $scope.user.password2__c) {
+                $ionicPopup.alert({title: 'Oops', content: "passwords don't match"});
+                return;
+            }
+            Auth.resetpassword($scope.user)
+                .success(function (data) {
+                     //$ionicPopup.alert({title:  'Reset Password', content: "Password reset!"});
+                     $state.go('app.evalstudyPWsetconfirmation');
+                })
+                .error(function () {
+                            $ionicPopup.alert({title: 'Set Password', content: "Problem"});
+                        });
+        };
 
 
-     })
+
+    })
 
 
     .controller('SignupCtrl', function ($scope, $state, $ionicPopup, Auth, OpenFB) {

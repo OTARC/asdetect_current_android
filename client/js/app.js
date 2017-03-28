@@ -66,6 +66,14 @@ console.log('app.js - $state.go to app.profile');
                     }
                 }
             })
+            .state('app.evalstudyPWsetconfirmation', {
+                url: "/evalstudyPWsetconfirmation",
+                views: {
+                    'menuContent' :{
+                        templateUrl: "templates/evalstudyPWsetconfirmation.html"
+                    }
+                }
+            })
 
     })
 
