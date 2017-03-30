@@ -21,7 +21,13 @@ var app = angular.module('asdetect', ['ionic', 'openfb', 'asdetect.config', 'asd
 
         // Re-route to welcome street if we don't have an authenticated token
         $rootScope.$on('$stateChangeStart', function(event, toState) {
-            if (toState.name !== 'app.login' && toState.name != 'app.requestresetpassword' && toState.name != 'app.resetpassword' && toState.name != 'app.thanks-password-reset' && toState.name != 'app.thanks' && toState.name !== 'app.signup' && toState.name !== 'app.welcome' && toState.name !== 'app.logout' && !$window.localStorage.getItem('token')) {
+            if (toState.name !== 'app.login' && toState.name != 'app.requestresetpassword' && 
+                toState.name != 'app.resetpassword' && toState.name != 'app.thanks-password-reset' && 
+                toState.name != 'app.thanks' && 
+                toState.name != 'app.evalstudysetpassword' &&
+                toState.name != 'app.evalstudyPWsetconfirmation' &&
+                toState.name !== 'app.signup' && toState.name !== 'app.welcome' && 
+                toState.name !== 'app.logout' && !$window.localStorage.getItem('token')) {
                 console.log('Aborting state ' + toState.name + ': No token');
                 $location.path('/app/welcome');
                 event.preventDefault();
