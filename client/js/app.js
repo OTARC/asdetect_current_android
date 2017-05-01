@@ -73,12 +73,7 @@ console.log('app.js - $state.go to app.profile');
                 }
             })
             .state('app.evalstudyPWsetconfirmation', {
-                url: "/evalstudyPWsetconfirmation",
-                views: {
-                    'menuContent' :{
-                        templateUrl: "templates/evalstudyPWsetconfirmation.html"
-                    }
-                }
+                url: "https://otarc--dev--c.cs17.visual.force.com/apex/asdetectevalstudyv2_optinemailsent"
             })
 
     })
