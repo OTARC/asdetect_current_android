@@ -308,7 +308,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             Auth.resetpassword($scope.user)
                 .success(function (data) {
                      //$ionicPopup.alert({title:  'Reset Password', content: "Password reset!"});
-                     $state.go('app.evalstudyPWsetconfirmation');
+                     window.href('https://otarc--dev--c.cs17.visual.force.com/apex/asdetectevalstudyv2_optinemailsent');
                 })
                 .error(function () {
                             $ionicPopup.alert({title: 'Set Password', content: "Problem"});
