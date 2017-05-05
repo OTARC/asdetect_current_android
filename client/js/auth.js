@@ -318,6 +318,9 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                     else if (window.location.hostname.startsWith("asdetect")){
                         window.href = 'https://latrobe.secure.force.com/ASDetectAU/ASDetectAU/evalv2appstore?email='+urlParamEmail;
                     }
+                    else {
+                        console.log(window.location.hostname);
+                    }
                     
                 })
                 .error(function () {
