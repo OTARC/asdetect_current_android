@@ -307,10 +307,10 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             }
             Auth.resetpassword($scope.user)
                 .success(function (data) {
-                    console.log('process.env.SALESFORCE_PORTAL_BASE_URL' + process.env.SALESFORCE_PORTAL_BASE_URL);
                      //$ionicPopup.alert({title:  'Reset Password', content: "Password reset!"});
                      
                     var urlParamEmail = this.href.substr(this.href.lastIndexOf('/') + 1);
+                    console.log('urlParamEmail:'+urlParamEmail);
 
                     if (window.location.hostname.startsWith("staging")){
                         window.href = 'https://dev-latrobe.cs17.force.com/ASDetectAU/evalv2appstore?email='+urlParamEmail;
