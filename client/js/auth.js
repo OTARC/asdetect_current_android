@@ -309,7 +309,16 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                 .success(function (data) {
                     console.log('process.env.SALESFORCE_PORTAL_BASE_URL' + process.env.SALESFORCE_PORTAL_BASE_URL);
                      //$ionicPopup.alert({title:  'Reset Password', content: "Password reset!"});
-                     window.open(process.env.SALESFORCE_PORTAL_BASE_URL+'/ASDetectAU/evalv2appstore','_self');
+                     
+                    var urlParamEmail = this.href.substr(this.href.lastIndexOf('/') + 1);
+
+                    if (window.location.hostname.startsWith("staging")){
+                        window.href = 'https://dev-latrobe.cs17.force.com/ASDetectAU/evalv2appstore?email='+urlParamEmail;
+                    }
+                    else if (window.location.hostname.startsWith("asdetect")){
+                        window.href = 'https://latrobe.secure.force.com/ASDetectAU/ASDetectAU/evalv2appstore?email='+urlParamEmail;
+                    }
+                    
                 })
                 .error(function () {
                             $ionicPopup.alert({title: 'Set Password', content: "Problem"});
