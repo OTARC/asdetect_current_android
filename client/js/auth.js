@@ -313,10 +313,12 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                     console.log('urlParamEmail:'+urlParamEmail);
 
                     if (window.location.hostname.startsWith("staging")){
-                        window.href = 'https://dev-latrobe.cs17.force.com/ASDetectAU/evalv2appstore?email='+urlParamEmail;
+                        console.log("staging");
+                        window.open('https://dev-latrobe.cs17.force.com/ASDetectAU/evalv2appstore?email='+urlParamEmail,'_self');
                     }
                     else if (window.location.hostname.startsWith("asdetect")){
-                        window.href = 'https://latrobe.secure.force.com/ASDetectAU/ASDetectAU/evalv2appstore?email='+urlParamEmail;
+                        console.log("asdetect");
+                        window.open('https://latrobe.secure.force.com/ASDetectAU/ASDetectAU/evalv2appstore?email='+urlParamEmail,'_self');
                     }
                     else {
                         console.log(window.location.hostname);
