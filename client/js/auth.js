@@ -309,7 +309,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                 .success(function (data) {
                      //$ionicPopup.alert({title:  'Reset Password', content: "Password reset!"});
                      
-                    var urlParamEmail = this.href.substr(this.href.lastIndexOf('/') + 1);
+                    var urlParamEmail = document.location.href.substr(document.location.href.lastInd‌​exOf('/') + 1);
                     console.log('urlParamEmail:'+urlParamEmail);
 
                     if (window.location.hostname.startsWith("staging")){
