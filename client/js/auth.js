@@ -277,7 +277,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
      })
 
 
-    .controller('ResetPasswordCtrl', function ($scope, $state, $ionicPopup, $rootScope, $stateParams, $window, Auth, Interaction) {
+    .controller('ResetPasswordCtrl', function ($scope, $state, $ionicPopup, $rootScope, $stateParams, $window, $location, Auth, Interaction) {
 
 
         $scope.user = {};
