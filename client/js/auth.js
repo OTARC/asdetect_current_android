@@ -308,7 +308,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             Auth.resetpassword($scope.user)
                 .success(function (data) {
                      //$ionicPopup.alert({title:  'Reset Password', content: "Password reset!"});
-                     window.open('https://dev-latrobe.cs17.force.com/ASDetectAU/ASDetectEvalStudyWelcome','_self');
+                     window.open(process.env.SALESFORCE_PORTAL_BASE_URL+'/ASDetectAU/evalv2appstore','_self');
                 })
                 .error(function () {
                             $ionicPopup.alert({title: 'Set Password', content: "Problem"});
