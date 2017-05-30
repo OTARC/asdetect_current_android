@@ -151,7 +151,7 @@ function login(req, res, next) {
         return res.send(401, invalidCredentials);
     }
 
-    db.query('SELECT id, firstname__c, lastname__c , email__c, loyaltyid__c as externalUserId, password__c  FROM latrobeasdetect.asdetect_contact__c WHERE email__c=$1', [creds.email__c], true)
+    db.query('SELECT id, sfid, firstname__c, lastname__c , email__c, loyaltyid__c as externalUserId, password__c  FROM latrobeasdetect.asdetect_contact__c WHERE email__c=$1', [creds.email__c], true)
         .then(function (user) {
             if (!user) {
                 winston.info('login(): ERROR - User '+creds.email__c+ ' not found');
@@ -180,7 +180,7 @@ function login(req, res, next) {
                     .then
                     createAccessToken(user)
                     .then(function(token) {
-                        return res.send({'user':{'email__c': user.email__c, 'firstname__c': user.firstname__c, 'lastname__c': user.lastname__c, 'sfId': user.id+"", 'hash': user.password__c}, 'token': token});
+                        return res.send({'user':{'email__c': user.email__c, 'firstname__c': user.firstname__c, 'lastname__c': user.lastname__c, 'sfId': user.sfid, 'hash': user.password__c}, 'token': token});
                         })
                         .catch(function(err) {
                             return next(err);    
