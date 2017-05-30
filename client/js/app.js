@@ -24,8 +24,8 @@ var app = angular.module('asdetect', ['ionic', 'openfb', 'asdetect.config', 'asd
             if (toState.name !== 'app.login' && toState.name != 'app.requestresetpassword' && 
                 toState.name != 'app.resetpassword' && toState.name != 'app.thanks-password-reset' && 
                 toState.name != 'app.thanks' && 
-                toState.name != 'app.evalstudysetpassword' &&
-                toState.name != 'app.evalstudyPWsetconfirmation' &&
+                toState.name != 'app.evalstudylogin' &&
+                toState.name != 'app.evalstudysetpassword' && toState.name != 'app.evalstudyPWsetconfirmation' &&
                 toState.name !== 'app.signup' && toState.name !== 'app.welcome' && 
                 toState.name !== 'app.logout' && !$window.localStorage.getItem('token')) {
                 console.log('Aborting state ' + toState.name + ': No token');
