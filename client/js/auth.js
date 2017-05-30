@@ -219,11 +219,11 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
 
                     if (window.location.hostname.startsWith("staging")){
                         console.log("staging");
-                        window.open('https://dev-latrobe.cs17.force.com/ASDetectAU/ASDetectEvalStudy_MyDetails?id='+sfid+"hash="+hash,'_self');
+                        window.open('https://dev-latrobe.cs17.force.com/ASDetectAU/ASDetectEvalStudy_MyDetails?id='+sfid+'hash='+hash,'_self');
                     }
                     else if (window.location.hostname.startsWith("asdetect")){
                         console.log("asdetect");
-                        window.open('https://latrobe.secure.force.com/ASDetectAU/ASDetectAU/ASDetectEvalStudy_MyDetails?id='+sfid+"hash="+hash,'_self');
+                        window.open('https://latrobe.secure.force.com/ASDetectAU/ASDetectAU/ASDetectEvalStudy_MyDetails?id='+sfid+'hash='+hash,'_self');
                     }
                     else {
                         console.log(window.location.hostname);
