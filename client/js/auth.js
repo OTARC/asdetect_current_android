@@ -58,7 +58,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             })
 
 
-            .state('app.login', {
+            .state('app.evalstudylogin', {
                 url: "/evalstudylogin",
                 views: {
                     'menuContent' :{
