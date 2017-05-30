@@ -180,7 +180,7 @@ function login(req, res, next) {
                     .then
                     createAccessToken(user)
                     .then(function(token) {
-                        return res.send({'user':{'email__c': user.email__c, 'firstname__c': user.firstname__c, 'lastname__c': user.lastname__c, 'sfId': user.Id, 'hash': user.password__c}, 'token': token});
+                        return res.send({'user':{'email__c': user.email__c, 'firstname__c': user.firstname__c, 'lastname__c': user.lastname__c, 'sfId': user.id, 'hash': user.password__c}, 'token': token});
                         })
                         .catch(function(err) {
                             return next(err);    
