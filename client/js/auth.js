@@ -214,6 +214,8 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             Auth.login($scope.user)
                 .success(function (user) {
 
+                    console.log(user);
+
 
                     if (window.location.hostname.startsWith("staging")){
                         console.log("staging");
