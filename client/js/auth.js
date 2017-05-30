@@ -176,6 +176,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
 
         $scope.user = {};
 
+        //Standard login
         $scope.login = function () {
 
             Auth.login($scope.user)
@@ -194,6 +195,37 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                     $ionicPopup.alert({title: 'Oops', content: err});
                 });
         };
+
+
+
+        $scope.evalStudyWebLogin = function () {
+
+            Auth.login($scope.user)
+                .success(function (user) {
+
+                    var sfId = user.sfid;
+                    var hash = user.hash;
+
+                    if (window.location.hostname.startsWith("staging")){
+                        console.log("staging");
+                        window.open('https://dev-latrobe.cs17.force.com/ASDetectAU/ASDetectEvalStudy_MyDetails?id='+sfid+"hash="+hash,'_self');
+                    }
+                    else if (window.location.hostname.startsWith("asdetect")){
+                        console.log("asdetect");
+                        window.open('https://latrobe.secure.force.com/ASDetectAU/ASDetectAU/ASDetectEvalStudy_MyDetails?id='+sfid+"hash="+hash,'_self');
+                    }
+                    else {
+                        console.log(window.location.hostname);
+                    }
+
+                })
+                .error(function (err) {
+                    $ionicPopup.alert({title: 'Oops', content: err});
+                });
+
+        }
+
+
 
         $scope.facebookLogin = function () {
 

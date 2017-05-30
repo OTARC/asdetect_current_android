@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>ASDetect : Login</title>
+<style type="text/css">
+ 
+
+</style>
+ 
+  </head>
+
+  <body>
+
+<section>
+  <span id="myspan"></span>
+  <h1>ASDetect</br> Login</h1>
+  <form>
+        <label class="item item-input">
+                <input type="email" placeholder="Email" ng-model="user.email__c">
+            </label>
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="user.password__c">
+            </label>
+
+            <button class="button button button-assertive button-assertive" ng-click="evalStudyWebLogin()">
+                Login
+            </button>
+
+  </form>
+
+</section>
+    
+    
+  </body>
+</html>
