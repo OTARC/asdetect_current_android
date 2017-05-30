@@ -57,6 +57,17 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                 }
             })
 
+
+            .state('app.login', {
+                url: "/evalstudylogin",
+                views: {
+                    'menuContent' :{
+                        templateUrl: "templates/evalstudylogin.html",
+                        controller: "LoginCtrl"
+                    }
+                }
+            })
+
             .state('app.evalstudysetpassword', {
                 url: "/evalstudysetpassword/:password_reset_token__c/:email__c",
                 views: {
