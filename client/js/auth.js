@@ -234,7 +234,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                     $ionicPopup.alert({title: 'Oops', content: err});
                 });
 
-        }
+        };
 
 
 
