@@ -218,11 +218,11 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                     console.log(user["user"]["sfid"]);
                     console.log(user["user"]["hash"]);
 
-                    var sfid = $stateParams.sfid;
-                    var hash = $stateParams.hash;
+                    var sfid = user["user"]["sfid"];
+                    var hash = user["user"]["hash"];
 
 
-                    /*
+                    
                     if (window.location.hostname.startsWith("staging")){
                         console.log("staging");
                         window.open('https://dev-latrobe.cs17.force.com/ASDetectAU/ASDetectEvalStudy_MyDetails?id='+sfid+'hash='+hash,'_self');
@@ -233,7 +233,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                     }
                     else {
                         console.log(window.location.hostname);
-                    }*/
+                    }
 
                 })
                 .error(function (err) {
