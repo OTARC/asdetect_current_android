@@ -215,6 +215,10 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
                 .success(function (user) {
 
                     console.log(user);
+
+                    console.log(user[sfid]);
+                    console.log(user[user][sfid]);
+
                     console.log(user.sfid);
                     console.log(user.user.sfid);
 
