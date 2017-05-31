@@ -216,6 +216,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
 
                     console.log(user["user"]);
                     console.log(user["user"]["sfid"]);
+                    console.log(user["user"]["hash"]);
 
                     var sfid = $stateParams.sfid;
                     var hash = $stateParams.hash;
