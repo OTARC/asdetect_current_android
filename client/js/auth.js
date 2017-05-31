@@ -214,6 +214,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             Auth.login($scope.user)
                 .success(function (user) {
 
+                    console.log(user);
                     console.log($scope.user);
 
                     console.log($stateParams);
