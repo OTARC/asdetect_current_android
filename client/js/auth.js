@@ -166,7 +166,7 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
     /*
      * Controllers
      */
-    .controller('LoginCtrl', function ($scope, $rootScope, $state, $window, $location, $ionicViewService, $ionicPopup, $ionicModal, Auth, Interaction, OpenFB) {
+    .controller('LoginCtrl', function ($scope, $rootScope, $stateParams, $state, $window, $location, $ionicViewService, $ionicPopup, $ionicModal, Auth, Interaction, OpenFB) {
 
         $ionicModal.fromTemplateUrl('templates/server-url-setting.html', {
             scope: $scope,
@@ -214,8 +214,8 @@ angular.module('asdetect.auth', ['openfb', 'asdetect.config', 'asdetect.interact
             Auth.login($scope.user)
                 .success(function (user) {
 
-                    var sfid = $scope.user.sfid;
-                    var hash = $scope.user.hash;
+                    var sfid = $stateParams.sfid;
+                    var hash = $stateParams.hash;
 
 
                     if (window.location.hostname.startsWith("staging")){
