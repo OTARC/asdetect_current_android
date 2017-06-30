@@ -33,7 +33,7 @@ var app = angular.module('asdetect', ['ionic', 'openfb', 'asdetect.config', 'asd
                 event.preventDefault();
             }
         });
-console.log('app.js - $state.go to app.profile');
+        console.log('app.js - $state.go to app.profile');
 
         $state.go('app.profile');
     })

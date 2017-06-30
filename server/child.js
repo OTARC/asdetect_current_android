@@ -88,6 +88,69 @@ function addChild(req, res, next) {
 };
 
 
+function updateChild(req, res, next) {
+
+    winston.info('child.updateChild(): externalUserId='+req.externalUserId);
+    winston.info('child.addChild(): payload='+JSON.stringify(req.body));
+    var externalchildid__c = req.externalchildid__c,
+    birthdate__c = req.body.birthdate__c,
+    childs_initials__c=req.body.childs_initials__c,
+    child_s_first_name__c=req.body.child_s_first_name__c,
+    child_s_last_name__c=req.body.child_s_last_name__c,
+    childs_nickname__c=req.body.childs_nickname__c,
+    diagnosis__c=req.body.diagnosis__c,
+    gender__c=req.body.gender__c,
+    adult_can_act_on_child_s_behalf__c=req.body.adult_can_act_on_child_s_behalf__c,
+    OTARC_can_use_childs_data_for_research__c=req.body.OTARC_can_use_childs_data_for_research__c,
+    child_has_a_sibling_with_an_asd__c=req.body.Child_has_a_Sibling_with_an_ASD__c;  
+
+    
+    if (isEmpty('birthdate__c',birthdate__c)||isEmpty('childs_initials__c',childs_initials__c)||isEmpty('child_s_last_name__c',child_s_last_name__c)||isEmpty('child_s_first_name__c',child_s_first_name__c)|| isEmpty('gender__c',gender__c)||isEmpty('adult_can_act_on_child_s_behalf__c',adult_can_act_on_child_s_behalf__c)) 
+    {
+      winston.info('child.addChild(): ERROR: Failed mandatory fields validation')
+      return res.send(400, missingChildInformation);  
+    }
+
+    //externalchildid__c = (+new Date()).toString(36); // TODO: more robust UID logic
+    
+    winston.info('addChild(): generated externalchildid__c='+externalchildid__c);
+    
+    db.query('UPDATE latrobeasdetect.mch_child_asdetect__c SET childs_initials__c=$1,child_s_first_name__c=$2,child_s_last_name__c=$3,childs_nickname__c=$4,birthdate__c=$5,gender__c=$6,diagnosis__c=$7,adult_can_act_on_child_s_behalf__c=$8,OTARC_can_use_childs_data_for_research__c=$9,child_has_a_sibling_with_an_asd__c=$10,rest_endpoint_version__c=$10 WHERE externalchildid__c=$11', 
+        [childs_initials__c,child_s_first_name__c,child_s_last_name__c,childs_nickname__c,birthdate__c,gender__c,diagnosis__c,adult_can_act_on_child_s_behalf__c,OTARC_can_use_childs_data_for_research__c,child_has_a_sibling_with_an_asd__c,config.restEndpointVersion, externalchildid__c], true)
+
+        .then(function () {
+            //return res.send({'externalchildid__c':externalchildid__c});
+            return res.send('ok');
+        })
+        .fail(function(err) {
+            return next(err);
+        })
+        .catch(next);
+
+};
+
+function deleteChild(req, res, next) {
+    winston.info('child.deleteChild(): externalUserId='+req.externalUserId);
+    winston.info('child.delete(): payload='+JSON.stringify(req.body));
+    var externalchildid__c = req.externalchildid__c;  
+
+    //externalchildid__c = (+new Date()).toString(36); // TODO: more robust UID logic
+    
+    winston.info('addChild(): generated externalchildid__c='+externalchildid__c);
+    
+    db.query('DELETE FROM latrobeasdetect.mch_child_asdetect__c  WHERE externalchildid__c=$1', 
+        [externalchildid__c], true)
+
+        .then(function () {
+            //return res.send({'externalchildid__c':externalchildid__c});
+            return res.send('ok');
+        })
+        .fail(function(err) {
+            return next(err);
+        })
+        .catch(next);
+
+};
 
 exports.findById = findById;
 exports.getAll = getAll;
