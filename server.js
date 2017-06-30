@@ -70,21 +70,23 @@ app.post('/s3signing', auth.validateToken, s3signing.sign);
 // the presence of validateToken indicates the inspection of the authorization header for a valid token
 app.get('/child', auth.validateToken,child.getAll);
 app.get('/child/:id', auth.validateToken,child.getById);
-app.post('/child', auth.validateToken,child.addChild);
+app.post('/child', auth.validateToken, child.addChild);
+app.post('/updateChild', auth.validateToken, child.updateChild);
+app.post('/deleteChild', auth.validateToken, child.deleteChild);
 app.get('/assessment', auth.validateToken, assessment.getAll);
 app.get('/assessment/:id', auth.validateToken, assessment.getById);
-app.post('/assessment/12m',auth.validateToken,assessment.create12mAssessment);
-app.post('/assessment/18m',auth.validateToken,assessment.create18mAssessment);
-app.post('/assessment/24m',auth.validateToken,assessment.create24mAssessment);
-app.post('/assessment/35y',auth.validateToken,assessment.create35yAssessment);
+app.post('/assessment/12m',auth.validateToken, assessment.create12mAssessment);
+app.post('/assessment/18m',auth.validateToken, assessment.create18mAssessment);
+app.post('/assessment/24m',auth.validateToken, assessment.create24mAssessment);
+app.post('/assessment/35y',auth.validateToken, assessment.create35yAssessment);
 app.get('/interactions', auth.validateToken, interactions.getItems);
 app.post('/interactions', auth.validateToken, interactions.addItem);
-app.get('/deleteChildrenAndTests',auth.validateToken,utilities.deleteChildrenAndTests);
-app.get('/deleteOldTokens',auth.validateToken,utilities.deleteOldTokens);
-app.get('/deleteContactAndChildrenAndTests',auth.validateToken,utilities.deleteContactAndChildrenAndTests);
-app.get('/deleteContactAndChildrenAndTestsByLastName/:lastname',auth.validateToken,utilities.deleteContactAndChildrenAndTestsByLastName);
+app.get('/deleteChildrenAndTests', auth.validateToken,utilities.deleteChildrenAndTests);
+app.get('/deleteOldTokens', auth.validateToken,utilities.deleteOldTokens);
+app.get('/deleteContactAndChildrenAndTests', auth.validateToken,utilities.deleteContactAndChildrenAndTests);
+app.get('/deleteContactAndChildrenAndTestsByLastName/:lastname', auth.validateToken,utilities.deleteContactAndChildrenAndTestsByLastName);
 app.delete('/interactions', auth.validateToken, interactions.deleteAll);
-app.post('/validateTokenForUser',auth.validateTokenForUser);
+app.post('/validateTokenForUser', auth.validateTokenForUser);
 
 
 
