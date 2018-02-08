@@ -18,8 +18,7 @@
   },
   "homepage": "https://github.com/ccoenraets/loyalty",
   "engines": {
-    "node": "0.10.35",
-    
+    "node": "0.10.35"    
   },
   "dependencies": {
     "bcrypt": "~0.7.7",
