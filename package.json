@@ -1,7 +1,7 @@
 {
-  "name": "ASdetect",
-  "version": "1.0.0",
-  "description": "ASdetect",
+  "name": "ASDetect",
+  "version": "1.0.1",
+  "description": "ASDetect",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/ccoenraets/loyalty",
   "engines": {
-    "node": "0.10.35"
+    "node": "8.9.0"
+    // "node": "0.10.35"
   },
   "dependencies": {
     "bcrypt": "~0.7.7",
